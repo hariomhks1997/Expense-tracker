@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    form{
+        background-color: yellow;
+        padding: 7rem;
+
+    }
+    body{
+       background-color: aqua; 
+       padding: 5px;
+       text-align: center;
+       margin:0
+
+
+
+    }
+    input{
+        background-color: blueviolet;
+    }
+    label{
+        background-color: white;
+        text-align: left;
+
+    }
+    header {
+     background: #f4f4f4;
+     padding: 1rem;
+     text-align: center;
+    }
+
+</style>
+</head>
+<body>
+  <header>
+    <h1></h1>
+</header>
+<form onsubmit="saveTolocalstorage(event)">
+    <label>Choose expense</label><br>
+    <input type="number" Name="expense" id="expense tag" value="100"></input><br>
+    <label>Choose description</label><br>
+    <input type="text" Name="username" id="usernametag" value="jhon"></input><br>
+    <label>Choose A category</label><br>
+    <select id="cars" name="cars">
+      <option value="Movie">Movie</option>
+      <option value="Market">Market</option>
+      <option value="fun">Fun</option>
+      <option value="icecream">Icecream</option>
+    </select><br>
+    <label>Mobile Number</label><br>
+    <input type="text number" Name="MobileNo" id="mobiletag" value="7408835571"></input><br>
+    <button>Add Expense</button>
+</form>
+<ul id="listOfitems"></ul>
+<script>
+    function saveTolocalstorage(event){
+    event.preventDefault();
+    const expense=event.target.expense.value;
+    const name=event.target.username.value;
+    const email=event.target.cars.value;
+    const mobile=event.target.MobileNo.value;
+    const obj={
+        name,
+        email,
+        mobile,
+        expense
+    }
+    localStorage.setItem(obj.email,JSON.stringify(obj))
+    showUserOnScreen(obj)
+    }
+    function showUserOnScreen(obj){
+    const parentElem = document.getElementById('listOfitems')
+    const childElem =document.createElement('li')
+    childElem.textContent= obj.expense+ "-"+obj.name + '- ' + obj.email+ ' - '+obj.mobile
+
+    var deletebtn=document.createElement('button')
+    deletebtn.appendChild(document.createTextNode('Delete Expense'))
+    childElem.appendChild(deletebtn)
+    parentElem.appendChild(childElem)
+    deletebtn.onclick=()=>{
+        localStorage.removeItem(obj.email)
+        parentElem.removeChild(childElem)
+    }
+    const editbutton=document.createElement('button')
+    editbutton.appendChild(document.createTextNode('Edit Expense'))
+    childElem.appendChild(editbutton)
+    parentElem.appendChild(childElem)
+    editbutton.onclick=()=>{
+        localStorage.removeItem(obj.email)
+        parentElem.removeChild(childElem)
+        document.getElementById("expense tag").value=obj.expense
+        document.getElementById('usernametag').value =obj.name
+        document.getElementById('emailtag').value=obj.email
+        document.getElementById('mobiletag').value=obj.mobile
+    }
+
+
+
+
+
+    //parentElem.innerHTML=`<li>${obj.name} - ${obj.email}</li>`
+    }
+
+</script>
+</body>
+</html>
